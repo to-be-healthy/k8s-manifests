@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-files
+  namespace: tobehealthy
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: tobehealthy
+spec:
+  selector:
+    app: backend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: actuator
+      port: 7070
+      targetPort: 7070
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: tobehealthy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/to-be-healthy/backend:placeholder
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: backend-env
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 7070
+              name: actuator
+          volumeMounts:
+            - name: files
+              mountPath: /data/files
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 7070
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 12
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 7070
+            initialDelaySeconds: 120
+            periodSeconds: 30
+      volumes:
+        - name: files
+          persistentVolumeClaim:
+            claimName: backend-files

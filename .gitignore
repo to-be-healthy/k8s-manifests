@@ -1,0 +1,3 @@
+# Never commit env files or secrets
+*.env
+secrets/
