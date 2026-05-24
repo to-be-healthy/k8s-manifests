@@ -5,8 +5,14 @@ namespace: tobehealthy
 
 resources:
   - ../../base
+  - configs/backend-config.yaml
   - secrets/db-credentials.sealed.yaml
   - secrets/redis-credentials.sealed.yaml
-  - secrets/backend-env.sealed.yaml
   - secrets/frontend-env.sealed.yaml
   - secrets/ghcr-pull.sealed.yaml
+  - secrets/backend-db-secret.sealed.yaml
+  - secrets/backend-redis-secret.sealed.yaml
+  - secrets/backend-jwt-secret.sealed.yaml
+  - secrets/backend-mail-secret.sealed.yaml
+  - secrets/backend-aws-secret.sealed.yaml
+  - secrets/backend-oauth-secret.sealed.yaml

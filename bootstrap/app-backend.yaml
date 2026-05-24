@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/to-be-healthy/backend.git
-    targetRevision: develop
-    path: k8s
+    repoURL: https://github.com/to-be-healthy/k8s-manifests.git
+    targetRevision: main
+    path: apps/tobehealthy/backend
   destination:
     server: https://kubernetes.default.svc
     namespace: tobehealthy

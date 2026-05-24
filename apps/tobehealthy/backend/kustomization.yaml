@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tobehealthy
+
+# deployment.yaml lives in the app repo so backend developers can own it.
+# Other resources (service, pvc) and the image tag are platform concerns.
+resources:
+  - https://raw.githubusercontent.com/to-be-healthy/backend/develop/deployment.yaml
+  - service.yaml
+  - pvc.yaml
+
+# Image tag is updated by backend repo CI via `kustomize edit set image`.
+images:
+  - name: ghcr.io/to-be-healthy/backend
+    newName: ghcr.io/to-be-healthy/backend
+    newTag: sha-2ff3884d055d
