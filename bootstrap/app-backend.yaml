@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tobehealthy-backend
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/to-be-healthy/backend.git
+    targetRevision: develop
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tobehealthy
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

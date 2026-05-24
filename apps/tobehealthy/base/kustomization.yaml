@@ -3,12 +3,13 @@ kind: Kustomization
 
 namespace: tobehealthy
 
+# Shared/platform resources for the tobehealthy app.
+# backend and frontend Deployments live in their own repos:
+#   - to-be-healthy/backend    -> k8s/
+#   - to-be-healthy/frontend   -> k8s/
+# Argo CD Applications: bootstrap/app-backend.yaml, bootstrap/app-frontend.yaml
 resources:
   - 00-namespace.yaml
   - 20-mysql.yaml
   - 21-redis.yaml
-  - 30-backend.yaml
-  - 31-frontend.yaml
   - 40-ingress.yaml
-
-# ClusterIssuers are cluster-scoped; apply once via bootstrap, not part of namespaced kustomization.
