@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tobehealthy-dev
+
+resources:
+  - ../../base
+
+# Dev tracks the same image references as prod by default.
+# To track a separate branch, override here with `kustomize edit set image`
+# from a different CI flow (e.g. on push to a `dev` branch).
+images:
+  - name: ghcr.io/to-be-healthy/backend
+    newName: ghcr.io/to-be-healthy/backend
+    newTag: sha-e59c86623365
+  - name: ghcr.io/to-be-healthy/frontend
+    newName: ghcr.io/to-be-healthy/frontend
+    newTag: sha-fba4ea736b87
+
+# Dev sizing: keep light. Skip Ingress (port-forward to access).
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      $patch: delete
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: tobehealthy
+  - target:
+      kind: Ingress
+      name: tobehealthy-www-redirect
+    patch: |-
+      $patch: delete
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: tobehealthy-www-redirect
+  # Lower storage for dev PVCs (10Gi → 2Gi where applicable)
+  - target:
+      kind: StatefulSet
+      name: mysql
+    patch: |-
+      - op: replace
+        path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+        value: 2Gi
+  - target:
+      kind: PersistentVolumeClaim
+      name: backend-files
+    patch: |-
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 1Gi

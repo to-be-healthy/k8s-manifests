@@ -1,15 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: tobehealthy
+
 resources:
-- ../../base
+  - ../../base
 
 # Image tags updated automatically by CI (GitHub Actions). Do not edit by hand;
 # use `kustomize edit set image ghcr.io/to-be-healthy/backend=ghcr.io/to-be-healthy/backend:<tag>`.
 images:
-- name: ghcr.io/to-be-healthy/backend
-  newName: ghcr.io/to-be-healthy/backend
-  newTag: sha-e59c86623365
-- name: ghcr.io/to-be-healthy/frontend
-  newName: ghcr.io/to-be-healthy/frontend
-  newTag: sha-fba4ea736b87
+  - name: ghcr.io/to-be-healthy/backend
+    newName: ghcr.io/to-be-healthy/backend
+    newTag: sha-e59c86623365
+  - name: ghcr.io/to-be-healthy/frontend
+    newName: ghcr.io/to-be-healthy/frontend
+    newTag: sha-fba4ea736b87
