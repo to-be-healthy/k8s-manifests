@@ -5,9 +5,12 @@ namespace: tobehealthy
 
 resources:
   - ../../base
+  - secrets/db-credentials.sealed.yaml
+  - secrets/redis-credentials.sealed.yaml
+  - secrets/backend-env.sealed.yaml
+  - secrets/frontend-env.sealed.yaml
+  - secrets/ghcr-pull.sealed.yaml
 
-# Image tags updated automatically by CI (GitHub Actions). Do not edit by hand;
-# use `kustomize edit set image ghcr.io/to-be-healthy/backend=ghcr.io/to-be-healthy/backend:<tag>`.
 images:
   - name: ghcr.io/to-be-healthy/backend
     newName: ghcr.io/to-be-healthy/backend

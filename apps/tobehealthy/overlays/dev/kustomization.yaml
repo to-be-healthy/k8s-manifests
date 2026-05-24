@@ -5,10 +5,12 @@ namespace: tobehealthy-dev
 
 resources:
   - ../../base
+  - secrets/db-credentials.sealed.yaml
+  - secrets/redis-credentials.sealed.yaml
+  - secrets/backend-env.sealed.yaml
+  - secrets/frontend-env.sealed.yaml
+  - secrets/ghcr-pull.sealed.yaml
 
-# Dev tracks the same image references as prod by default.
-# To track a separate branch, override here with `kustomize edit set image`
-# from a different CI flow (e.g. on push to a `dev` branch).
 images:
   - name: ghcr.io/to-be-healthy/backend
     newName: ghcr.io/to-be-healthy/backend
@@ -17,10 +19,10 @@ images:
     newName: ghcr.io/to-be-healthy/frontend
     newTag: sha-fba4ea736b87
 
-# Dev sizing: keep light. Skip Ingress (port-forward to access).
 patches:
   - target:
       kind: Ingress
+      name: tobehealthy
     patch: |-
       $patch: delete
       apiVersion: networking.k8s.io/v1
@@ -36,7 +38,6 @@ patches:
       kind: Ingress
       metadata:
         name: tobehealthy-www-redirect
-  # Lower storage for dev PVCs (10Gi → 2Gi where applicable)
   - target:
       kind: StatefulSet
       name: mysql
