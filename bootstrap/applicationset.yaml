@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenants
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/to-be-healthy/k8s-manifests.git
+        revision: main
+        directories:
+          - path: apps/*/overlays/*
+  template:
+    metadata:
+      # e.g. tobehealthy-prod, tobehealthy-dev
+      name: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
+      labels:
+        project: '{{ index .path.segments 1 }}'
+        env: '{{ index .path.segments 3 }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/to-be-healthy/k8s-manifests.git
+        targetRevision: main
+        path: '{{ .path.path }}'
+      destination:
+        server: https://kubernetes.default.svc
+        # prod uses the bare project name (preserves existing namespace);
+        # other envs append the env suffix (e.g. tobehealthy-dev).
+        namespace: '{{ if eq (index .path.segments 3) "prod" }}{{ index .path.segments 1 }}{{ else }}{{ index .path.segments 1 }}-{{ index .path.segments 3 }}{{ end }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 5m
