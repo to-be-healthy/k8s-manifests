@@ -1,3 +1,5 @@
-# Never commit env files or secrets
+# .env files contain plaintext secrets and must never be committed
 *.env
-secrets/
+
+# kubeseal-encrypted secrets are safe to commit (only the controller can decrypt)
+!*.sealed.yaml
