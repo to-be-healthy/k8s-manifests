@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: tobehealthy
 
 resources:
-  - https://raw.githubusercontent.com/to-be-healthy/frontend/develop/deployment.yaml
-  - service.yaml
+- https://raw.githubusercontent.com/to-be-healthy/frontend/develop/deployment.yaml
+- service.yaml
 
 images:
-  - name: ghcr.io/to-be-healthy/frontend
-    newName: ghcr.io/to-be-healthy/frontend
-    newTag: sha-d6f76912c2ec
+- name: ghcr.io/to-be-healthy/frontend
+  newName: ghcr.io/to-be-healthy/frontend
+  newTag: sha-cfc4c4b49b7c
