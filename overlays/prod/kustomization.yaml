@@ -12,4 +12,4 @@ images:
   newTag: sha-47625094da0e
 - name: ghcr.io/to-be-healthy/frontend
   newName: ghcr.io/to-be-healthy/frontend
-  newTag: placeholder
+  newTag: sha-79864be81c09
