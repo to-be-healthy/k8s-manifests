@@ -25,6 +25,8 @@ spec:
       labels:
         app: frontend
     spec:
+      imagePullSecrets:
+        - name: ghcr-pull
       containers:
         - name: frontend
           image: ghcr.io/to-be-healthy/frontend:placeholder
