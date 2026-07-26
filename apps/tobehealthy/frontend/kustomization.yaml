@@ -10,4 +10,4 @@ resources:
 images:
 - name: ghcr.io/to-be-healthy/frontend
   newName: ghcr.io/to-be-healthy/frontend
-  newTag: sha-cfc4c4b49b7c
+  newTag: sha-151faa1dd497
