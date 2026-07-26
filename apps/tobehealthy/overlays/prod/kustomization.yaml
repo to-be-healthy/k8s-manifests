@@ -16,3 +16,4 @@ resources:
   - secrets/backend-mail-secret.sealed.yaml
   - secrets/backend-aws-secret.sealed.yaml
   - secrets/backend-oauth-secret.sealed.yaml
+  - secrets/backend-apple-key.sealed.yaml

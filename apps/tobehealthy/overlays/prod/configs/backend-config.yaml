@@ -11,10 +11,10 @@ data:
   JWT_REFRESH_TOKEN_VALID_SECONDS: "604800"
   MAIL_HOST: smtp.gmail.com
   MAIL_PORT: "587"
-  OAUTH_APPLE_CLIENT_ID: tobehealthy.apple.login
-  OAUTH_APPLE_KEY_PATH: config/AuthKey_67HC4438MW.p8
-  OAUTH_APPLE_REDIRECT_URI: https://geonganghaejim.site/apple/callback
-  OAUTH_APPLE_TEAM_ID: Z34X73LB67
+  OAUTH_APPLE_CLIENT_ID: com.geonganghaejim.signin
+  OAUTH_APPLE_KEY_PATH: /etc/apple/AuthKey_YAFMRF359Z.p8
+  OAUTH_APPLE_REDIRECT_URI: https://geonganghaejim.site/api/callback/apple
+  OAUTH_APPLE_TEAM_ID: 4BYFWNF8ST
   OAUTH_GOOGLE_CLIENT_ID: 793717607575-2hk7b0bfbq202mmlm17br2atqgl1pop4.apps.googleusercontent.com
   OAUTH_GOOGLE_GRANT_TYPE: authorization_code
   OAUTH_GOOGLE_REDIRECT_URI: https://geonganghaejim.site/callback
